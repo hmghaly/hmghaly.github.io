@@ -638,3 +638,78 @@ function getCookie(cname) {
 function delCookie(cname){
     document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
+
+//upload form data using a class - include also file uploads
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+      if ((encoded.length % 4) > 0) {
+        encoded += '='.repeat(4 - (encoded.length % 4));
+      }
+      resolve(encoded);
+    };
+    reader.onerror = error => reject(error);
+  });
+}
+
+async function readFileAsDataURL(file) {
+    let result_base64 = await new Promise((resolve) => {
+        let fileReader = new FileReader();
+        fileReader.onload = (e) => resolve(fileReader.result);
+        fileReader.readAsDataURL(file);
+    });
+
+    //console.log(result_base64); // aGV5IHRoZXJl...
+
+    return result_base64;
+}
+
+
+async function get_form_vals(class_name){ //get the vals from inputs of a form
+  //const formData = new FormData();
+    val_dict={}
+    elements=document.getElementsByClassName(class_name)
+    used_names=[] //to address radio buttons, where inputs have the same names
+    for (el in elements){
+        cur_el=elements[el]
+        //console.log(cur_el.files)
+        el_name=cur_el.name
+        if (cur_el.files==null || cur_el.files==undefined) el_value=cur_el.value
+        else {
+          cur_file_dict=cur_el.files[0]
+          //formData.append(el_name, cur_file_dict);
+          // console.log(el_name,cur_file_dict)
+          // console.log(Object.keys(cur_file_dict))
+          var reader = new FileReader();
+          let dataURL = await readFileAsDataURL(cur_el.files[0])
+          file_obj={}
+          file_obj["name"]=cur_file_dict.name
+          file_obj["size"]=cur_file_dict.size
+          file_obj["data"]=dataURL
+          //onsole.log(file_obj)
+          val_dict[el_name]=file_obj
+          continue
+        } 
+        
+        if (el_name==null || el_name==undefined) continue
+        if (el_value==null || el_value==undefined) continue
+        if (used_names.indexOf(el_name)>-1) continue
+        
+        if (cur_el.type=="radio"){
+            used_names.push(el_name)
+            var radios = document.getElementsByName(el_name);
+            for (rd in radios){
+                //check if the radio button is of the same class
+                cur_rd=radios[rd]
+                if (cur_rd.checked) val_dict[el_name]=cur_rd.value
+            }
+        }
+        else if (cur_el.type=="checkbox") val_dict[el_name]=cur_el.checked
+        else val_dict[el_name]=el_value
+    }
+    //formData.append("values", JSON.stringify(val_dict));
+    return val_dict
+}
