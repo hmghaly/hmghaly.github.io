@@ -683,6 +683,8 @@ async function get_form_vals(class_name){ //get the vals from inputs of a form
           //formData.append(el_name, cur_file_dict);
           // console.log(el_name,cur_file_dict)
           // console.log(Object.keys(cur_file_dict))
+          //console.log("cur_el.value",cur_el.value)
+          if (cur_el.value=="") continue
           var reader = new FileReader();
           let dataURL = await readFileAsDataURL(cur_el.files[0])
           file_obj={}
