@@ -2,6 +2,20 @@ function $$(el_id){
     return document.getElementById(el_id)
 }
 
+function get_class_el_items(class_el_name0){
+  if (class_el_name0[0]==".") {
+    class_name0=class_el_name0.slice(1)
+    all_class_items0=document.getElementsByClassName(class_name0) 
+  } 
+  else{
+    if (class_el_name0[0]=="#") class_el_name0=class_el_name0.slice(1)
+      all_class_items0=[]
+      found_el0=document.getElementById(class_el_name0)
+      if (found_el0!=null) all_class_items0.push(found_el0)
+  }
+  return all_class_items0
+}
+
 function today(){
     date_str=new Date().toLocaleDateString('en-GB')
     return date_str
@@ -42,6 +56,14 @@ function str(myVar) {
     if (typeof myVar === 'string' || myVar instanceof String) return myVar
     return JSON.stringify(myVar)
 } 
+
+function list_getter(list1,sub_item_i){
+    final_list=[
+    for (item0 of list1){
+        final_list.push(item0[sub_item_i])
+    }
+    return final_list
+}
 function make_str_array(array0) { // convert ["a",1,3,5] into ["a","1","3","5"] 
     new_array_of_strings=[]
     for (ar0 of array0) new_array_of_strings.push(str(ar0))
