@@ -58,7 +58,7 @@ function str(myVar) {
 } 
 
 function list_getter(list1,sub_item_i){
-    final_list=[
+    final_list=[]
     for (item0 of list1){
         final_list.push(item0[sub_item_i])
     }
