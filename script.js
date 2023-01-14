@@ -15,6 +15,16 @@ function get_class_el_items(class_el_name0){
   }
   return all_class_items0
 }
+
+//from a list of elements, identify the ones that have a certain class
+function filter_items(all_items0,class0){
+  final_items=[]
+  for (item0 of all_items0){
+    if (item0.classList.contains(class0)) final_items.push(item0)
+  }
+  return final_items
+}
+
 //recursively get the parent element of an element and all the ancestors
 function get_parents_rec(item0){
   var els = [];
