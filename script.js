@@ -15,6 +15,23 @@ function get_class_el_items(class_el_name0){
   }
   return all_class_items0
 }
+//recursively get the parent element of an element and all the ancestors
+function get_parents_rec(item0){
+  var els = [];
+  while (item0) {
+    els.unshift(item0);
+    item0 = item0.parentNode;
+  }
+  return els    
+}
+
+function get_parent_with_tag(item0,parent_tag){
+  while (item0) {
+    item0 = item0.parentNode;
+    if (item0.tagName.toLocaleLowerCase()==parent_tag.toLocaleLowerCase()) return item0
+  }
+  return null
+}
 
 function today(){
     date_str=new Date().toLocaleDateString('en-GB')
