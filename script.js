@@ -33,6 +33,14 @@ function get_parent_with_tag(item0,parent_tag){
   return null
 }
 
+function scroll2el(element0){
+  element0.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+        });  
+}
+
 function today(){
     date_str=new Date().toLocaleDateString('en-GB')
     return date_str
