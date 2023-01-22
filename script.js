@@ -16,6 +16,8 @@ function get_class_el_items(class_el_name0){
   return all_class_items0
 }
 
+
+
 //from a list of elements, identify the ones that have a certain class
 function filter_items(all_items0,class0){
   final_items=[]
@@ -771,4 +773,10 @@ async function get_form_vals(class_name){ //get the vals from inputs of a form
     }
     //formData.append("values", JSON.stringify(val_dict));
     return val_dict
+}
+
+
+function show_id_hide_class(id0,class0){
+    $("."+class0).hide()
+    $("#"+id0).show()
 }
