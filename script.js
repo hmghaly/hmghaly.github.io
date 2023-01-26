@@ -780,3 +780,10 @@ function show_id_hide_class(id0,class0){
     $("."+class0).hide()
     $("#"+id0).show()
 }
+
+function replace_all(text,a,b){
+	text_split=text.split(a)
+	new_text=text_split.join(b)
+	return new_text
+}
+
