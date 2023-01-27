@@ -787,3 +787,24 @@ function replace_all(text,a,b){
 	return new_text
 }
 
+async function read_text_async(url){
+  const response = await fetch(url);
+  const text = await response.text();
+  return text;	
+}
+
+
+async function read_json_async(url){
+  const response = await fetch(url);
+  const data_json = await response.json();
+  return data_json;	
+}
+
+async function post_data_async(url){
+	
+}
+
+async function fetch_async(url,params){
+	const response = await fetch(url);
+	return response
+}
