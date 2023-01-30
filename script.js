@@ -809,6 +809,22 @@ async function fetch_async(url,params){
 	return response
 }
 
+
+async function post_data_async(link,obj2upload){
+    //we expect both uploaded data and received data to be of json format
+    const response = await fetch(link,
+      {
+          method: "POST",
+          body: JSON.stringify(obj2upload)
+      })
+      const data_json = await response.json();
+      return data_json;     
+          // .catch(error => {
+      //     console.error('Error:', error);
+      //   });  
+}
+
+
 function fill_select(select_el_id,option_list){
 	cur_select_el=$$(select_el_id)
 	cur_select_el.innerHTML=""
