@@ -812,7 +812,7 @@ async function fetch_async(url,params){
 function fill_select(select_el_id,option_list){
 	cur_select_el=$$(select_el_id)
 	cur_select_el.innerHTML=""
-    if (option_list[0]!=["",""]){
+    if (option_list[0][0]!=""){
         option_el=create_el_basic("option",cur_select_el)
         option_el.innerHTML=""
         option_el.value=""
