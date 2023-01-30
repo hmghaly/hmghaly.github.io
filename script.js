@@ -812,6 +812,7 @@ async function fetch_async(url,params){
 function fill_select(select_el_id,option_list){
 	cur_select_el=$$(select_el_id)
 	cur_select_el.innerHTML=""
+    if (option_list[0]!=["",""]) option_list.unshift(["",""])
 	for (op of option_list){
 		op_val=op[0]
 		op_text=op[1]
