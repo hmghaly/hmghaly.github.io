@@ -736,7 +736,8 @@ async function get_form_vals(class_name){ //get the vals from inputs of a form
         cur_el=elements[el]
         //console.log(cur_el.files)
         el_name=cur_el.name
-        if (cur_el.files==null || cur_el.files==undefined) el_value=cur_el.value
+        if (cur_el.dataset.values!=null && cur_el.dataset.values!=undefined) el_value=cur_el.dataset.values.split(",")
+        else if (cur_el.files==null || cur_el.files==undefined) el_value=cur_el.value
         else {
           cur_file_dict=cur_el.files[0]
           //formData.append(el_name, cur_file_dict);
@@ -825,7 +826,7 @@ async function post_data_async(link,obj2upload){
 }
 
 
-function fill_select(select_el_id,option_list){
+function fill_select(select_el_id,option_list,option_class=""){
 	cur_select_el=$$(select_el_id)
 	cur_select_el.innerHTML=""
     if (option_list[0][0]!=""){
@@ -839,5 +840,6 @@ function fill_select(select_el_id,option_list){
 		option_el=create_el_basic("option",cur_select_el)
 		option_el.innerHTML=op_text
 		option_el.value=op_val
+		if (option_class!="") option_el.className=op_val+" "+option_class
 	}
 }
