@@ -736,6 +736,7 @@ async function get_form_vals(class_name){ //get the vals from inputs of a form
         cur_el=elements[el]
         //console.log(cur_el.files)
         el_name=cur_el.name
+        if (el_name==null || el_name==undefined) el_name=cur_el.id //a temporary solution till we see the problem with the select plugin
         if (cur_el.dataset!=null && cur_el.dataset!=undefined && cur_el.dataset.values!=null && cur_el.dataset.values!=undefined) el_value=cur_el.dataset.values.split(",")
         else if (cur_el.files==null || cur_el.files==undefined) el_value=cur_el.value
         else {
