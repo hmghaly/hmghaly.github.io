@@ -40,6 +40,7 @@ function get_parents_rec(item0){
 function get_parent_with_tag(item0,parent_tag){
   while (item0) {
     item0 = item0.parentNode;
+    if (item0==null || item0==undefined) return null
     if (item0.tagName.toLocaleLowerCase()==parent_tag.toLocaleLowerCase()) return item0
   }
   return null
