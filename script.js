@@ -228,6 +228,18 @@ function get_local_strorage(obj_name,obj_key){
 }
 
 
+function get_local_storage_data(obj_name){
+  retrieved_obj=localStorage.getItem(obj_name);
+  data_dict0=JSON.parse(retrieved_obj)
+  return data_dict0
+}
+
+function set_local_storage_data(obj_name,data_dict0){
+  localStorage.setItem(obj_name, JSON.stringify(data_dict0));
+}
+
+
+
 function create_dict(dict_obj,nested_keys,default_val=null){
     tmp=dict_obj
     for (ki in nested_keys) {
