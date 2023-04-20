@@ -241,14 +241,14 @@ function set_local_storage_data(obj_name,data_dict0){
 function assign_user_key(storage_name,data_dict0){
     //checked_assigned_user_key=get_local_strorage(storage_name,"assigned_user_key")
     checked_assigned_user_key=data_dict0["assigned_user_key"]
-    if (checked_assigned_user_key!=null)  assigned_user_key=checked_assigned_user_key
+    if (checked_assigned_user_key!=null)  assigned_user_key0=checked_assigned_user_key
     else {
-        assigned_user_key=(+new Date).toString(36);
-        data_dict0["assigned_user_key"]=assigned_user_key
+        assigned_user_key0=(+new Date).toString(36);
+        data_dict0["assigned_user_key"]=assigned_user_key0
         set_local_storage_data(storage_name,data_dict0)
         //set_local_strorage(storage_name,"assigned_user_key",assigned_user_key)
     }
-    return assign_user_key
+    return assigned_user_key0
 }
 
 function create_key(){
