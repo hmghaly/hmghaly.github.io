@@ -417,6 +417,7 @@ function read_file(file_path,callback_fn){
 }
 
 function check_email_str(email_str){
+    if (email_str==null) return false
     split=email_str.split("@")
     if (split.length!=2) return false
     domain_split=split[1].split(".")
