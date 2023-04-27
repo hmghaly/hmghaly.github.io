@@ -72,6 +72,10 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+function get_random_item(list0){
+    i0=getRandomInt(len(list0))
+    return list0[i0]
+}
 
 //utility functions, python style
 function len(list1){
