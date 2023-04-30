@@ -656,7 +656,22 @@ function seconds2str(seconds){
     return timer_str
 }
 
-function start_timer(timer_id,callback_fn,interval=1000){ //
+
+function start_timer(dur,timer_el_id,callback_fn){
+    timer.time_remaining=dur //there should be a global object called timer={}
+    timer.starter=setInterval(function(){
+        timer.time_remaining-=1
+        timer_str=seconds2str(timer.time_remaining)
+        if (timer.time_remaining<=0) {
+            clearInterval(timer.starter)
+            callback_fn()
+        } 
+        $$(timer_el_id).innerHTML = ""+timer_str;
+    }, 1000);
+}
+
+
+function start_timer_old(timer_id,callback_fn,interval=1000){ //
     timer_str=seconds2str(timer.remianing_time)
     $$(timer_id).innerHTML=timer_str
     timer.starter = setInterval(function(){
