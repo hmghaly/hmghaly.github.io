@@ -896,3 +896,17 @@ function fill_select(select_el_id,option_list,option_class=""){
 		if (option_class!="") option_el.className=op_val+" "+option_class
 	}
 }
+
+
+function get_dist(obj1,obj2){
+    rect1=obj1.getBoundingClientRect()
+    rect2=obj2.getBoundingClientRect()
+    pt1_x=rect1.x+rect1.width*0.5
+    pt1_y=rect1.y+rect1.height*0.5
+    pt2_x=rect2.x+rect2.width*0.5
+    pt2_y=rect2.y+rect2.height*0.5
+    dist_obj={}
+    dist_obj.delta_x=pt2_x-pt1_x
+    dist_obj.delta_y=pt2_y-pt1_y
+    return dist_obj
+}
