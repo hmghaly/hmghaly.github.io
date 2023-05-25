@@ -18,6 +18,11 @@ function get_class_el_items(class_el_name0){
 
 
 
+function is_empty(obj0){
+    if (Object.keys(obj0).length === 0) return true
+    else return false
+}
+
 //from a list of elements, identify the ones that have a certain class
 function filter_items(all_items0,class0){
   final_items=[]
