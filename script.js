@@ -664,6 +664,7 @@ function seconds2str(seconds){
 
 function start_timer(dur,timer_el_id,callback_fn){
     timer.time_remaining=dur //there should be a global object called timer={}
+    if (timer.starter!=null) clearInterval(timer.starter)
     timer.starter=setInterval(function(){
         timer.time_remaining-=1
         timer_str=seconds2str(timer.time_remaining)
