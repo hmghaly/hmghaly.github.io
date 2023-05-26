@@ -64,6 +64,11 @@ function today(){
     return date_str
 }
 
+function yesterday(){
+    yesterday_obj = new Date(Date.now() - 86400000);
+    return yesterday_obj.toLocaleDateString('en-GB')
+}
+
 function img(src,onload=null,id=""){ //create img object
     new_img=new Image()
     
