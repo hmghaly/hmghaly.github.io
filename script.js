@@ -387,7 +387,7 @@ function create_table(parent_el,array1){
         var row = table_el.insertRow(-1);
         for (const sub_item of item0){
             var cell0 = row.insertCell(-1);
-            cell0.innerHTML=sub_item
+            cell0.innerHTML=str(sub_item)
         }
     }
     return table_el
@@ -400,7 +400,7 @@ function fill_table(table_id,array1){
         var row = table_el.insertRow(-1);
         for (const sub_item of item0){
             var cell0 = row.insertCell(-1);
-            cell0.innerHTML=sub_item
+            cell0.innerHTML=str(sub_item)
         }
     }
     return table_el    
@@ -921,3 +921,12 @@ function get_dist(obj1,obj2){
     dist_obj.delta_y=pt2_y-pt1_y
     return dist_obj
 }
+
+
+// function create_csv_content(array0){
+//     let csvContent = "data:text/csv;charset=utf-8,";
+//     rows.forEach(function(rowArray) {
+//         let row = rowArray.join(",");
+//         csvContent += row + "\r\n";
+//     });    
+// }
