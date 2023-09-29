@@ -17,6 +17,9 @@ function get_class_el_items(class_el_name0){
 }
 
 
+function sleep(duration){
+    return new Promise(resolve => setTimeout(resolve, duration));
+}
 
 function is_empty(obj0){
     if (Object.keys(obj0).length === 0) return true
