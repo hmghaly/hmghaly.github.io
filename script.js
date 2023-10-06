@@ -2,6 +2,10 @@ function $$(el_id){
     return document.getElementById(el_id)
 }
 
+function repl(str_item,a,b){
+    return str_item.split(a).join(b)
+}
+
 function get_class_el_items(class_el_name0){
   if (class_el_name0[0]==".") {
     class_name0=class_el_name0.slice(1)
@@ -868,9 +872,9 @@ async function read_json_async(url){
   return data_json;	
 }
 
-async function post_data_async(url){
+// async function post_data_async(url){
 	
-}
+// }
 
 async function fetch_async(url,params){
 	const response = await fetch(url);
