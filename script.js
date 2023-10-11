@@ -412,6 +412,32 @@ function fill_table(table_id,array1){
     }
     return table_el    
 }
+
+function fill_table_all(table_id,table_content_list,headers=[]){ //fill table with both headers and rows content
+    table_el=$$(table_id)
+    table_el.innerHTML=""
+    var thead = document.createElement('thead');
+    table_el.appendChild(thead);
+
+    for (var i=0; i<headers.length; i++) {
+        thead.appendChild(document.createElement("th")).
+              appendChild(document.createTextNode(headers[i]));
+    }
+
+    var tbody = document.createElement('tbody');
+    table_el.appendChild(tbody);
+
+    for (const item0 of table_content_list){
+        var row = table_el.insertRow(-1);
+        for (const sub_item of item0){
+            var cell0 = row.insertCell(-1);
+            cell0.innerHTML=str(sub_item)
+        }
+    }
+    return table_el    
+}
+
+
 function post_data(link,obj2upload,callback_fn){
     //we expect both uploaded data and received data to be of json format
     fetch(link,
