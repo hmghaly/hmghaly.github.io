@@ -39,6 +39,11 @@ function filter_items(all_items0,class0){
   return final_items
 }
 
+//14 Nov 23 - create random ID
+function createID() {
+     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+}
+
 //recursively get the parent element of an element and all the ancestors
 function get_parents_rec(item0){
   var els = [];
