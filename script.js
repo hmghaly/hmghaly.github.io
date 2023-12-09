@@ -6,6 +6,15 @@ function repl(str_item,a,b){
     return str_item.split(a).join(b)
 }
 
+function format_str(string,dict){
+    //string should have keys with {}
+    for (const [key, value] of Object.entries(dict)) {
+        to_str="{"+key+"}"
+        string=repl(string,to_str,value)
+    }
+    return string
+}
+
 function get_class_el_items(class_el_name0){
   if (class_el_name0[0]==".") {
     class_name0=class_el_name0.slice(1)
