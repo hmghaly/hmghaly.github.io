@@ -1,0 +1,540 @@
+timer={}
+	function $$(el_id){
+		return document.getElementById(el_id)
+	}
+
+function capture(){
+	html2canvas(document.querySelector("#main")).then(canvas => {
+    	//document.body.appendChild(canvas)
+    	var dataURL = canvas.toDataURL("image/png");
+    	href = dataURL.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+    	var a = document.createElement('a');
+		a.href =href //"img.png";
+		a.download = "output.png";
+		document.body.appendChild(a);
+		a.click();
+		//a.innerHTML="Test1"
+		//window.location.assign(href)
+		document.body.removeChild(a);
+
+	});
+}
+
+	const getOffset = (el) => {
+	  const rect = el.getBoundingClientRect();
+	  return {
+	    left: rect.left + window.pageXOffset,
+	    top: rect.top + window.pageYOffset,
+	    width: rect.width || el.offsetWidth,
+	    height: rect.height || el.offsetHeight
+	  };
+	}
+
+
+
+const connect = (div1, div2, color, thickness) => {
+	console.log("now drawing")
+  const off1 = getOffset(div1);
+  const off2 = getOffset(div2);
+  console.log("offset:", off1,off2)
+
+  x1 = off1.left + off1.width*0.5;
+  y1 = off1.top + off1.height*0.5;
+
+  x2 = off2.left + off2.width*0.5;
+  y2 = off2.top + off2.height*0.5;
+  // const x1 = off1.left + off1.width*0.5;
+  // const y1 = off1.top + off1.height*0.5;
+
+  // const x2 = off2.left + off2.width*0.5;
+  // const y2 = off2.top + off2.height*0.5;
+
+  if (off1.left==off2.left) {
+  	y1=y1+20
+  	y2=y2-20
+  }
+  else if (off1.top==off2.top) {
+  	x1=x1-20
+  	x2=x2+20
+  }
+  else if (off1.top>off2.top && off1.left<off2.left) {
+  	y1=y1+15
+  	y2=y2-15
+  	x1=x1-15
+  	x2=x2+15  	
+  }
+
+  const length = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+
+  const cx = ((x1 + x2) / 2) - (length / 2);
+  const cy = ((y1 + y2) / 2) - (thickness / 2);
+
+  const angle = Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI);
+
+  const htmlLine = "<div id='line1' class='line' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+
+  //document.body.innerHTML += htmlLine;
+	//a=$$("line1")
+	var new_el=document.createElement("div")
+	
+	new_el.style.backgroundColor= color//"blue"
+	new_el.style.opacity=0.4
+	new_el.style.borderRadius="20px"
+	new_el.style.padding="0px"
+	new_el.style.margin="0px"
+	new_el.style.height=""+thickness +"px"
+	new_el.style.lineHeight="1px"
+	new_el.style.position="absolute"
+	new_el.style.left=""+cx +"px"
+	new_el.style.top=""+cy +"px"
+	new_el.style.width=""+length +"px"
+	new_el.style.webkitTransform = "rotate(" + angle + "deg)";
+	new_el.style.MozTransform = "rotate(" + angle + "deg)";
+	new_el.style.msTransform = "rotate(" + angle + "deg)";
+	new_el.style.OTransform = "rotate(" + angle + "deg)";
+	new_el.style.transform = "rotate(" + angle + "deg)";
+	//document.body.appendChild(new_el)
+	$$("main").appendChild(new_el)
+	console.log(new_el)
+	//new_el.draggable=true;
+	return new_el
+}
+
+var ar_char_indexes=[1569, 1570, 1571, 1572, 1573, 1574, 1575, 1576, 1577, 1578, 1579, 1580, 1581, 1582, 1583, 1584, 1585, 1586, 1587, 1588, 1589, 1590, 1591, 1592, 1593, 1594, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610]
+function rand_ar_char(){
+	cur_n=ar_char_indexes.length
+	return String.fromCharCode(ar_char_indexes[Math.floor(Math.random()*cur_n)]);
+}
+
+function getDarkColor() {
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += Math.floor(Math.random() * 10);
+    }
+    return color;
+}
+
+function getRandomColor2() {
+  //var letters = '0123456789ABCDEF';
+  var letters = '0123456789ABCDE';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function getRandomColor() {
+  color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+  return color;
+}
+
+function is_in_array(small_array0,big_array0){
+	output=false
+	small_array_json=JSON.stringify(small_array0)
+	for (item of big_array0){
+		if (JSON.stringify(item)==small_array_json) output=true
+	} 
+	//big_array_json=JSON.stringify(small_array0)
+	return output //big_array_json.includes(small_array_json)
+}
+
+function init_letter_matrix(size){
+	final_matrix=[]
+	for (var i=0;i<size;i++){
+		tmp_row=[]
+		for (var j=0;j<size;j++){
+			tmp_row.push(rand_ar_char())
+		}
+		final_matrix.push(tmp_row)
+	}
+	return final_matrix
+}
+function reverse(s){
+    return [...s].reverse().join("");
+}
+
+function rand_int(int0){
+	return Math.floor(Math.random()*int0)
+}
+function random_int_range(min0,max0){
+	return Math.floor(Math.random() * (max0 - min0 + 1)) + min0;
+}
+
+function copy_obj(obj1){
+	return JSON.parse(JSON.stringify(obj1))
+}
+
+function fill_words(word_list0,size=6){
+	//first sort words by length
+	word_list0.sort(function(a, b){
+	  return b.length - a.length;
+	});
+	size=Math.max(word_list0[0].length+1,size) //make the size bigger than the biggest word by 1
+	cur_matrix0=[] //create an empty matrix with this size
+	for (i0=0;i0<size;i0++){
+		cur_row=[]
+		for (j0=0;j0<size;j0++) cur_row.push("")
+		cur_matrix0.push(cur_row)
+	}
+	//cur_matrix0[0][3]="A" //cur_matrix[i][j]
+	// console.log(cur_matrix0)
+	// //get_empty_cells(0,5,cur_matrix0)
+	// list_deploy_pts(cur_matrix0)
+	final_words=[] //words that were finally deployed
+	modes=["h","v","d"] //horizontal vertical diagonal
+	for (cur_word of word_list0){
+		len_w=cur_word.length
+		cur_possible_deploy_pts=list_deploy_pts(cur_matrix0) //for each word, we check the deployable coordinates, showing how many characters can we go h/v/d
+		valid_deploy_pts=[] //then identify the valid points that can fit the current word
+		for (pt_obj0 of cur_possible_deploy_pts){
+			if (pt_obj0.v>=len_w){
+				new_obj=copy_obj(pt_obj0) //{"mode":"v"}
+				new_obj["mode"]="v"
+				valid_deploy_pts.push(new_obj)
+			}
+			if (pt_obj0.h>=len_w){
+				new_obj=copy_obj(pt_obj0) //{"mode":"v"}
+				new_obj["mode"]="h"
+				valid_deploy_pts.push(new_obj)
+			}
+			if (pt_obj0.d>=len_w){
+				new_obj=copy_obj(pt_obj0) //{"mode":"v"}
+				new_obj["mode"]="d"
+				valid_deploy_pts.push(new_obj)
+			}
+		}
+		valid_deploy_pts=shuffle(valid_deploy_pts) //we shuffle the valid ones
+		//console.log(valid_deploy_pts)
+		if (valid_deploy_pts.length==0) continue
+		final_words.push(cur_word)
+
+		cur_obj=valid_deploy_pts[0] //then we choose the first deploy point object, and start deploying
+		cur_mode=cur_obj["mode"] //depending on the mode
+		if (cur_mode=="v") var [cur_h_step,cur_v_step] = [1,0] //we identify the deploy directions and steps h/v/d
+		else if (cur_mode=="h") var [cur_h_step,cur_v_step] = [0,-1]
+		else if (cur_mode=="d") var [cur_h_step,cur_v_step] = [1,-1]		
+		start_i=cur_obj.i
+		start_j=cur_obj.j
+		for (var inc0=0;inc0<len_w;inc0++){
+			offset_i=inc0*cur_h_step
+			offset_j=inc0*cur_v_step
+			//console.log(offset_i, offset_j)
+			//console.log(start_i+offset_i, start_j+offset_j)
+			cur_matrix0[start_i+offset_i][start_j+offset_j]=cur_word[inc0]
+		}
+
+
+		//console.log(cur_word,cur_mode)
+		//console.log(cur_matrix0)
+			
+
+	}
+	for (i0=0;i0<cur_matrix0.length;i0++){
+		for (j0=0;j0<cur_matrix0.length;j0++){
+			cur_char=cur_matrix0[i0][j0]
+			if (cur_char=="") cur_matrix0[i0][j0]=rand_ar_char()
+		} 
+	}	
+
+	out={}
+	out["words"]=final_words
+	out["matrix"]=cur_matrix0
+	return out
+
+}
+
+
+//getting how many empty cells if you go left, down and diagoally left-down
+function get_empty_cells(i0,j0,matrix0){
+	ltr=false
+	h_step=-1 //horizontal step negative, because the cell with index zero is to the left, and we go from right to left
+	if (ltr) h_step=1
+	cur_char=matrix0[i0][j0]
+	if (cur_char!="") return
+	vertical_count=1
+	horizontal_count=1
+	diagonal_count=1
+	new_i=i0
+	while (cur_char=="" && new_i<matrix0.length-1){
+		new_i+=1
+		cur_char=matrix0[new_i][j0]
+		if (cur_char=="") vertical_count+=1
+	}
+	cur_char=""
+	new_j=j0
+	while (cur_char=="" && new_j>0){
+		//new_j-=1
+		new_j+=h_step
+		cur_char=matrix0[i0][new_j]
+		if (cur_char=="") horizontal_count+=1
+	}
+	cur_char=""
+	new_i=i0
+	new_j=j0
+	while (cur_char=="" && new_j>0 && new_i<matrix0.length-1){
+		new_i+=1
+		//new_j-=1
+		new_j+=h_step
+		cur_char=matrix0[new_i][new_j]
+		if (cur_char=="") diagonal_count+=1
+	}
+	//we can add another diagonal up, and vertical up, but not needed now
+
+	// console.log("vertical_count", vertical_count)
+	// console.log("horizontal_count", horizontal_count)
+	// console.log("diagonal_count", diagonal_count)
+	out={}
+	out.v=vertical_count
+	out.h=horizontal_count
+	out.d=diagonal_count
+	return out
+}
+
+//listing all the empty points in the matrix, together with how many cells in h/v/d directions
+function list_deploy_pts(matrix0){
+	cur_list=[]
+	for (i0=0;i0<matrix0.length;i0++){
+		for (j0=0;j0<matrix0.length;j0++){
+			cur_char=matrix0[i0][j0]
+			if (cur_char!="") continue
+			cur_obj=get_empty_cells(i0,j0,matrix0)
+			cur_obj.i=i0
+			cur_obj.j=j0
+			//console.log(cur_obj)
+			cur_list.push(cur_obj)
+		} 
+	}	
+	return cur_list
+}
+
+
+function id2coords(id_str){
+	id_split=id_str.split("-")
+	if (id_split.length!=2) return null
+	return [Number(id_split[0]),Number(id_split[1])]
+}
+
+function check(ev0){
+	trg0=ev0.currentTarget
+	console.log(trg0,selected_cell)
+	//console.log()
+	cur_ij=id2coords(trg0.id)
+	if (trg0==selected_cell) {
+		//selected_cell.classList.remove("selected");
+		return
+	} 
+	if (selected_cell==null) {
+		selected_cell=trg0
+		selected_cell.classList.add("selected");
+		$$("message").innerHTML="now click on the last letter of the word you found"
+	} 
+	else {
+		//console.log("draw line")
+		selected_cell.classList.remove("selected");
+		prev_ij=id2coords(selected_cell.id)
+		$$("message").innerHTML="click on the first letter of the word you found"
+		
+
+		//console.log("cur_ij",cur_ij,"prev_ij",prev_ij)
+		delta_x=cur_ij[0]-prev_ij[0]
+		delta_y=cur_ij[1]-prev_ij[1]
+		
+		acceptable=false
+		cur_delta=0
+		if (delta_x==0 || delta_y==0){
+			cur_delta=Math.abs(delta_x)+Math.abs(delta_y)
+			acceptable=true	
+		} 
+		else if (Math.abs(delta_x)==Math.abs(delta_y)) {
+			cur_delta=Math.abs(delta_x)
+			acceptable=true
+		} 
+		step_x=0
+		step_y=0
+		if (delta_x<0) step_x=-1
+		if (delta_x>0) step_x=1
+		if (delta_y<0) step_y=-1
+		if (delta_y>0) step_y=1
+		tmp_char_list=[]
+		for (var i0=0;i0<=cur_delta;i0++){
+			var [cur_i,cur_j]=prev_ij
+			cur_pt=[cur_i+step_x*i0,cur_j+step_y*i0]
+			test_id=""+cur_pt[0]+"-"+cur_pt[1]
+			console.log(cur_pt, )
+			cur_cell=$$(test_id)
+			cur_char=""
+			if (cur_cell!=null) cur_char=cur_cell.innerHTML
+			if (cur_char!="") tmp_char_list.push(cur_char) 
+		}
+
+
+		console.log("delta_x",delta_x,"delta_y",delta_y, "acceptable",acceptable)
+		if (!acceptable){
+			selected_cell.classList.remove("selected");
+			selected_cell=null
+			return 
+		}
+		cur_str=tmp_char_list.join("")
+		reverse_str=reverse(cur_str)
+		console.log(cur_str)
+		tmp_id="id_"+cur_str
+		reverse_tmp_id="id_"+cur_str
+		str_found=""
+		if ($$(tmp_id)===null && $$(reverse_tmp_id)==null) {
+			selected_cell.classList.remove("selected");
+			selected_cell=null			
+			return	
+		} 
+		if ($$(tmp_id)!=null) {
+			str_found=cur_str
+			$$(reverse_tmp_id).classList.remove("other")
+			$$(tmp_id).classList.add("success")
+		} 
+		if ($$(reverse_tmp_id)!=null) {
+			str_found=cur_str
+			$$(reverse_tmp_id).classList.remove("other")
+			$$(reverse_tmp_id).classList.add("success")
+		} 		
+
+		//color0="#" + ((1<<24)*Math.random() | 0).toString(16)
+		color0="#" + ((1<<24)*Math.random() | 0).toString(16)
+		//color0=getDarkColor()
+		//color0=getRandomColor2()
+		color0=getRandomColor()
+		console.log(color0)
+		connect(trg0, selected_cell, color0, 30)
+		selected_cell=null
+		n_found_words+=1
+		if (n_found_words==n_words){
+			$$("message").innerHTML="Congratulations! You found all the words!"
+			clearTimeout(cur_timer)
+		}
+		else $$("message").innerHTML="Well done! Look for another word, and if you find it, click on the first letter of the word"
+		
+	}
+}
+
+function populate(array){
+	console.log("Hello!")
+	//var table = document.createElement('table');
+	var table = $$("word_search")
+    for (var i = 0; i < array.length; i++) {
+        var row = document.createElement('tr');
+        for (var j = 0; j < array[i].length; j++) {
+            var cell = document.createElement('td');
+            //var [i0,j0,text]=array[i][j]
+            cell.id=""+i+"-"+j
+            cell.name=array[i][j]
+            
+            cell.textContent = array[i][j];
+            cell.onclick=check
+            row.appendChild(cell);
+        }
+        table.appendChild(row);
+    }
+    return table;
+}
+
+function deploy_word_list(words0){
+		wobj=$$("words")
+		wobj.style.margin="20px"
+		wobj.innerHTML=""
+		for (w0 of words0){
+			tmp_el=create_el_basic("span",wobj)
+			tmp_el.name=w0
+			tmp_el.id="id_"+w0
+			tmp_el.innerHTML=" "+w0+" "
+			tmp_el.style.fontSize="X-large"
+			tmp_el.className="label other"
+			tmp_el.style.margin="5px"
+			tmp_el.style.borderRadius="5px"
+
+		}
+
+}
+
+function deploy_more_links(puzzle_names0){
+		wobj=$$("more")
+		wobj.style.margin="20px"
+		wobj.innerHTML=""
+		for (pz0 of puzzle_names0){
+			tmp_el=create_el_basic("a",wobj)
+			tmp_el.name=pz0
+			tmp_el.id="pz_id_"+pz0
+			tmp_el.innerHTML=pz0
+			tmp_el.style.fontSize="X-large"
+			//tmp_el.className="label other"
+			tmp_el.style.margin="10px"
+			tmp_el.href="?"+pz0
+
+		}
+
+}
+
+
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+var cur_timer=null;
+var n_words=0;
+var n_found_words=0
+
+
+var selected_cell=null
+function init(){
+	cur_data_id=window.location.search.slice(1)
+	cur_data_id=cur_data_id.split("&")[0]
+	cur_data_fpath="data/_id_.json".replace("_id_",cur_data_id)
+	$$("puzzle-space").hidden=true;
+	if (cur_data_id!=""){
+		read_file(cur_data_fpath,function(obj1){
+			words=obj1.words
+			$$("puzzle-name").innerHTML=obj1.name
+			$$("learn-link").href=obj1.link
+			deploy_obj=fill_words(words,7)
+			matrix1=deploy_obj.matrix
+			words1=deploy_obj.words
+			n_words=words1.length
+			deploy_word_list(words1)
+			table0=populate(matrix1)
+			$$("puzzle-space").hidden=false;
+			$$("message").innerHTML="click on a the first letter of the word you found"
+			//timer_count_up("timer_div")
+			cur_timer=setInterval(setTime, 1000);
+
+		})
+
+	}
+	list_url="list.py"
+	read_file(list_url,function(obj1){
+		console.log(obj1)
+		deploy_more_links(obj1)
+	})
+
+
+	
+	//document.body.appendChild(table0)
+
+
+}
+
+
+
+function setTime() {
+  ++totalSeconds;
+  document.getElementById("minutes").innerHTML = pad(parseInt(totalSeconds / 60));
+  document.getElementById("seconds").innerHTML = pad(totalSeconds % 60);
+  // secondsLabel.innerHTML = pad(totalSeconds % 60);
+  // minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
