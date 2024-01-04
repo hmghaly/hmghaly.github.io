@@ -15,6 +15,11 @@ function format_str(string,dict){
     return string
 }
 
+function remove_html_tags(input_str){
+  var regex = /(<([^>]+)>)/ig
+  return input_str.replace(regex, "")
+}
+
 function get_class_el_items(class_el_name0){
   if (class_el_name0[0]==".") {
     class_name0=class_el_name0.slice(1)
