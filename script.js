@@ -398,6 +398,10 @@ function create_el_basic(el_tag,el_parent){
     return el0
 }
 
+// function remove_el(el0){
+// 	parent0=el0.parentElement
+// }
+
 function create_el(el_tag,el_parent,el_id,el_name,el_html){
     var el0=document.createElement(el_tag)
     el_parent.appendChild(el0)
@@ -689,7 +693,6 @@ function listToMatrix(list, elementsPerSubArray) {
 function parse_qs(){
     qs_dict={}
     qs=window.location.search.slice(1)
-    qs=decodeURI(qs)
     amp_split=qs.split("&")
     for (const am of amp_split){
         eq_split=am.split("=")
@@ -960,6 +963,28 @@ function fill_select(select_el_id,option_list,option_class=""){
 		if (option_class!="") option_el.className=op_val+" "+option_class
 	}
 }
+
+
+
+function fill_select_el(cur_select_el,option_list,option_class=""){
+    cur_select_el.innerHTML=""
+    if (option_list[0][0]!=""){
+        option_el=create_el_basic("option",cur_select_el)
+        option_el.innerHTML=""
+        option_el.value=""
+    }
+    for (op of option_list){
+        op_val=op[0]
+        op_text=op[1]
+        option_el=create_el_basic("option",cur_select_el)
+        option_el.innerHTML=op_text
+        option_el.value=op_val
+        if (option_class!="") option_el.className=op_val+" "+option_class
+    }
+}
+
+
+
 
 
 function get_dist(obj1,obj2){
