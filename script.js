@@ -693,6 +693,7 @@ function listToMatrix(list, elementsPerSubArray) {
 function parse_qs(){
     qs_dict={}
     qs=window.location.search.slice(1)
+    qs=decodeURI(qs)
     amp_split=qs.split("&")
     for (const am of amp_split){
         eq_split=am.split("=")
