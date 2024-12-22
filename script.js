@@ -985,6 +985,18 @@ function fill_select_el(cur_select_el,option_list,option_class=""){
 }
 
 
+function fill_select_el_simple(cur_select_el,option_list){
+    cur_select_el.innerHTML=""
+    for (op of option_list){
+        op_val=op[0]
+        op_text=op[1]
+        option_el=create_el_basic("option",cur_select_el)
+        option_el.innerHTML=op_text
+        option_el.value=op_val
+    }
+}
+
+
 
 
 
