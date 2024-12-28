@@ -649,7 +649,7 @@ function apply_form_vals(val_dict,form_class_name){
         cur_el=elements[el]
         el_name=cur_el.name
         dict_val=val_dict[el_name]
-        console.log(dict_val,el_name)
+        //console.log(dict_val,el_name)
         if (dict_val==null || dict_val==undefined) continue 
         
         // el_value=cur_el.value
