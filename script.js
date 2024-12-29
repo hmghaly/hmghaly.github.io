@@ -38,7 +38,7 @@ function get_class_el_items(class_el_name0){
 function uq(list1){
     list2=[]
     for (item0 of list1){
-        if (list2.indexOf(item0)>0) continue
+        if (list2.indexOf(item0)>-1) continue
         list2.push(item0)
     }
     return list2
