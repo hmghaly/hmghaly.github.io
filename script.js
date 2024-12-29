@@ -34,6 +34,23 @@ function get_class_el_items(class_el_name0){
   return all_class_items0
 }
 
+//get unique items of a list - 28 Dec 2022
+function uq(list1){
+    list2=[]
+    for (item0 of list1){
+        if (list2.indexOf(item0)>0) continue
+        list2.push(item0)
+    }
+    return list2
+}
+
+//combine two lists - 28 Dec 2022
+function extend(list1,list2){
+    list3=[]
+    for (item0 of list1) list3.push(item0)
+    for (item0 of list2) list3.push(item0)    
+    return list3
+}
 
 function sleep(duration){
     return new Promise(resolve => setTimeout(resolve, duration));
