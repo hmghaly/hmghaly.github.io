@@ -1031,6 +1031,22 @@ function get_dist(obj1,obj2){
 }
 
 
+//22 Feb 2025
+function encode_obj(obj0){
+    //encode a dictionary or list object as base64
+    str0=JSON.stringify(obj0)
+    encoded0=btoa(str0)
+    return encoded0
+}
+
+function decode_obj(base64_str0){
+    //decode a dictionary or list object from base64 string
+    decoded0=atob(base64_str0)
+    obj0=JSON.parse(decoded0)
+    return obj0
+}
+
+
 // function create_csv_content(array0){
 //     let csvContent = "data:text/csv;charset=utf-8,";
 //     rows.forEach(function(rowArray) {
