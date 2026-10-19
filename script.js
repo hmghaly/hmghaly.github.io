@@ -964,6 +964,22 @@ async function post_data_async(link,obj2upload){
 }
 
 
+//18 October 2026
+async function post_async(link,obj2upload){
+    //we expect both uploaded data and received data to be of text format
+    const response = await fetch(link,
+      {
+          method: "POST",
+          body: JSON.stringify(obj2upload)
+      })
+      const data_text = await response.text();
+      return data_text;     
+          // .catch(error => {
+      //     console.error('Error:', error);
+      //   });  
+}
+
+
 function fill_select(select_el_id,option_list,option_class=""){
 	cur_select_el=$$(select_el_id)
 	cur_select_el.innerHTML=""
@@ -1028,22 +1044,6 @@ function get_dist(obj1,obj2){
     dist_obj.delta_x=pt2_x-pt1_x
     dist_obj.delta_y=pt2_y-pt1_y
     return dist_obj
-}
-
-
-//22 Feb 2025
-function encode_obj(obj0){
-    //encode a dictionary or list object as base64
-    str0=JSON.stringify(obj0)
-    encoded0=btoa(str0)
-    return encoded0
-}
-
-function decode_obj(base64_str0){
-    //decode a dictionary or list object from base64 string
-    decoded0=atob(base64_str0)
-    obj0=JSON.parse(decoded0)
-    return obj0
 }
 
 
